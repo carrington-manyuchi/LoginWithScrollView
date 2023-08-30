@@ -9,6 +9,8 @@ import UIKit
 
 class Login: UIViewController {
     
+
+    
     private let loginLayer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -33,17 +35,40 @@ class Login: UIViewController {
     
     private let usernameTextField: UITextField = {
         let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.font = UIFont(name: "Avenir", size: 16)
+        textField.borderStyle = .roundedRect
+        textField.clearButtonMode = .always
+        
+        textField.attributedPlaceholder = NSAttributedString(
+            string: "Enter username",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray]
+        )
+        
         return textField
     }()
     
     private let passwordTextField: UITextField = {
         let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.font = UIFont(name: "Avenir", size: 16)
+        textField.borderStyle = .roundedRect
+        textField.clearButtonMode = .always
+        
+        textField.attributedPlaceholder = NSAttributedString(
+            string: "Enter password",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray ])
+        
+        
         return textField
     }()
     
     
     private let loginButton: UIButton = {
         let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Log in", for: .normal)
+        button.backgroundColor = .blue
         return button
     }()
 
@@ -66,6 +91,15 @@ class Login: UIViewController {
     func setupUI() {
         view.addSubview(loginLayer)
         loginLayer.addSubview(imageView)
+        
+        loginLayer.addSubview(usernameTextField)
+        usernameTextField.backgroundColor = UIColorFromRGB(rgbValue: 0xEAFDFC)
+        
+        loginLayer.addSubview(passwordTextField)
+        passwordTextField.backgroundColor = UIColorFromRGB(rgbValue: 0xEAFDFC)
+        
+        loginLayer.addSubview(loginButton)
+        
         loginLayer.backgroundColor = UIColorFromRGB(rgbValue: 0xC8FFE0)
         view.backgroundColor = UIColorFromRGB(rgbValue: 0xF6F4EB)
         composeConstraints()
@@ -87,9 +121,37 @@ class Login: UIViewController {
             ]
             
             
+            let usernameTextFieldConstraints = [
+                usernameTextField.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 30),
+                usernameTextField.leadingAnchor.constraint(equalTo: loginLayer.leadingAnchor, constant: 15),
+                usernameTextField.trailingAnchor.constraint(equalTo: loginLayer.trailingAnchor, constant: -15),
+                usernameTextField.heightAnchor.constraint(equalToConstant: 40),
+               
+            ]
+            
+            
+            let passwordTextFieldConstraints = [
+                passwordTextField.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: 20),
+                passwordTextField.leadingAnchor.constraint(equalTo: loginLayer.leadingAnchor, constant: 15),
+                passwordTextField.trailingAnchor.constraint(equalTo: loginLayer.trailingAnchor, constant: -15),
+                passwordTextField.heightAnchor.constraint(equalToConstant: 40),
+                
+            ]
+            
+            
+            let loginButtonConstraints = [
+                loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 35),
+                loginButton.centerXAnchor.constraint(equalTo: loginLayer.centerXAnchor),
+                loginButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 220),
+                loginButton.heightAnchor.constraint(equalToConstant: 55),
+                loginButton.bottomAnchor.constraint(lessThanOrEqualTo: loginLayer.bottomAnchor, constant: -50)
+            ]
         
-        NSLayoutConstraint.activate(loginLayerConstraints)
+            NSLayoutConstraint.activate(loginLayerConstraints)
             NSLayoutConstraint.activate(composeImageViewConstraints)
+            NSLayoutConstraint.activate(usernameTextFieldConstraints)
+            NSLayoutConstraint.activate(passwordTextFieldConstraints)
+            NSLayoutConstraint.activate(loginButtonConstraints)
     }
 
 
