@@ -9,8 +9,17 @@ import UIKit
 
 class Login: UIViewController {
     
-
-    
+    private let loginScrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.alwaysBounceVertical = false
+        //scrollView.bounces = false
+        scrollView.backgroundColor = .green
+        return scrollView
+    }()
+        
     private let loginLayer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -89,7 +98,9 @@ class Login: UIViewController {
     
      //MARK: - setupViews
     func setupUI() {
-        view.addSubview(loginLayer)
+        view.addSubview(loginScrollView)
+        
+        loginScrollView.addSubview(loginLayer)
         loginLayer.addSubview(imageView)
         
         loginLayer.addSubview(usernameTextField)
@@ -106,20 +117,32 @@ class Login: UIViewController {
     }
     
         func composeConstraints() {
-            let loginLayerConstraints = [
-                loginLayer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide
-                    .topAnchor, constant: 40),
-                loginLayer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-                loginLayer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-                loginLayer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+            let loginScrollViewConstraints = [
+                loginScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+                loginScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                loginScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                loginScrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+               // loginScrollView.heightAnchor.constraint(greaterThanOrEqualToConstant: 450)
             ]
+            
+            let loginLayerConstraints = [
+                loginLayer.topAnchor.constraint(equalTo: loginScrollView.topAnchor, constant: 20),
+                loginLayer.leadingAnchor.constraint(equalTo: loginScrollView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+                loginLayer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+                loginLayer.bottomAnchor.constraint(equalTo: loginScrollView.bottomAnchor, constant: -10),
+                
+                //loginLayer.heightAnchor.constraint(equalTo: loginScrollView.heightAnchor, multiplier: 1.2)
+            ]
+            
+            let hConst = loginLayer.heightAnchor.constraint(equalToConstant: 450)
+            hConst.isActive = true
+            hConst.priority = UILayoutPriority(50)
             
             let composeImageViewConstraints = [
                 imageView.topAnchor.constraint(equalTo: loginLayer.topAnchor, constant: 20),
-                imageView.heightAnchor.constraint(equalToConstant: 120),
-                imageView.centerXAnchor.constraint(equalTo: loginLayer.centerXAnchor),
+                imageView.heightAnchor.constraint(greaterThanOrEqualToConstant: 120),
+                imageView.centerXAnchor.constraint(equalTo: loginScrollView.centerXAnchor),
             ]
-            
             
             let usernameTextFieldConstraints = [
                 usernameTextField.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 30),
@@ -129,7 +152,6 @@ class Login: UIViewController {
                
             ]
             
-            
             let passwordTextFieldConstraints = [
                 passwordTextField.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: 20),
                 passwordTextField.leadingAnchor.constraint(equalTo: loginLayer.leadingAnchor, constant: 15),
@@ -137,23 +159,22 @@ class Login: UIViewController {
                 passwordTextField.heightAnchor.constraint(equalToConstant: 40),
                 
             ]
-            
-            
+
             let loginButtonConstraints = [
                 loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 35),
-                loginButton.centerXAnchor.constraint(equalTo: loginLayer.centerXAnchor),
+                loginButton.centerXAnchor.constraint(equalTo: loginScrollView.centerXAnchor),
                 loginButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 220),
                 loginButton.heightAnchor.constraint(equalToConstant: 55),
-                loginButton.bottomAnchor.constraint(lessThanOrEqualTo: loginLayer.bottomAnchor, constant: -50)
+                loginButton.bottomAnchor.constraint(lessThanOrEqualTo: loginScrollView.bottomAnchor, constant: -50)
             ]
         
             NSLayoutConstraint.activate(loginLayerConstraints)
+            NSLayoutConstraint.activate(loginScrollViewConstraints)
             NSLayoutConstraint.activate(composeImageViewConstraints)
             NSLayoutConstraint.activate(usernameTextFieldConstraints)
             NSLayoutConstraint.activate(passwordTextFieldConstraints)
             NSLayoutConstraint.activate(loginButtonConstraints)
+           
     }
-
-
 
 }
