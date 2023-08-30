@@ -7,7 +7,12 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class CollectionVC: UIViewController {
+    
+    private let homeCollectionView: UICollectionView = {
+        let collectionView = UICollectionView()
+        return collectionView
+    }() 
 
     override func viewDidLoad() {
         super.viewDidLoad()
